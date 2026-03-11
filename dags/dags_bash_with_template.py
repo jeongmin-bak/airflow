@@ -5,7 +5,7 @@ from airflow.providers.standard.operators.bash import BashOperator
 from common.common_func import regist2
 
 with DAG(
-    dag_id="dags_python_with_op_kwargs",
+    dag_id="dags_bash_with_template",
     schedule="10 0 * * *",
     start_date=pendulum.datetime(2023, 3, 1, tz="Asia/Seoul"),
     catchup=False
