@@ -2,7 +2,6 @@ import pendulum
 
 from airflow.sdk import DAG, task
 from airflow.providers.smtp.operators.smtp import EmailOperator
-
 with DAG(
     dag_id="dags_python_email_operator",
     schedule="0 8 1 * *",
@@ -21,7 +20,8 @@ with DAG(
         to='ribbon29@naver.com',
         subject='{{ data_interval_end.in_timezone("Asia/Seoul") | ds }} some_logic 처리결과',
         html_content='{{ data_interval_end.in_timezone("Asia/Seoul") | ds }} 처리 결과는 <br> \
-                    {{ti.xcom_pull(task_ids="something_task")}} 했습니다 <br>'
+                    {{ti.xcom_pull(task_ids="something_task")}} 했습니다 <br>',
+        conn_id="conn_smtp_gmail"
     )
 
     some_logic() >> send_email
