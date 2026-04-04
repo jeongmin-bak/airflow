@@ -6,7 +6,7 @@ from airflow.sdk import DAG
 
 
 with DAG(
-    dag_id='dags_branch_python_operator',
+    dag_id='dags_bash_branch_operator',
     schedule='0 1 * * *',
     start_date=pendulum.datetime(2023, 4, 1, tz='Asia/Seoul'),
     catchup=False
