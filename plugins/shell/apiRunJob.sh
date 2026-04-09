@@ -14,7 +14,7 @@ error_exit() {
 
 # 환경변수 / 설정
 API_AGENT_NAME="api_collector-3.3.2.jar"
-AGENT_FILE_PATH="/Users/bagjeongmin/Desktop/SpringBoot/api_collector/target"
+AGENT_FILE_PATH="/opt/jars/api_collector-3.3.2.jar"
 AGENT_FULL_PATH="${AGENT_FILE_PATH}/${API_AGENT_NAME}"
 
 # 필수 명령어 체크
