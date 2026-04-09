@@ -10,7 +10,7 @@ with DAG(
 ) as dag:
     
     api_meta_run = BashOperator(
-        task_id="t1_orange",
+        task_id="api_meta_run",
         bash_command="/opt/airflow/plugins/shell/apiRunJob.sh 1234 20250409",
     )
 
