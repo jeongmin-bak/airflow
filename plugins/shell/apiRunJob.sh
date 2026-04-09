@@ -12,12 +12,13 @@ error_exit() {
     exit 1
 }
 
-# 필수 명령어 체크
-command -v curl >/dev/null 2>&1 || error_exit "curl is not installed."
-command -v jq >/dev/null 2>&1 || error_exit "jq is not installed."
-
-# 환경변수 
+# 환경변수 / 설정
 API_AGENT_NAME="api_collector-3.3.2.jar"
+AGENT_FILE_PATH="/Users/bagjeongmin/Desktop/SpringBoot/api_collector/target"
+AGENT_FULL_PATH="${AGENT_FILE_PATH}/${API_AGENT_NAME}"
+
+# 필수 명령어 체크
+command -v java >/dev/null 2>&1 || error_exit "java is not installed."
 
 # 파라미터 체크
 if [ $# -lt 2 ]; then
@@ -28,24 +29,28 @@ fi
 API_META_ID="$1"
 BSDT="$2"
 
-# 실행 옵션
-RETRY_INTERVAL="${RETRY_INTERVAL:-3}"
-MAX_RETRY="${MAX_RETRY:-200}"
-CONNECT_TIMEOUT="${CONNECT_TIMEOUT:-10}"
-MAX_TIME="${MAX_TIME:-30}"
-ENABLE_KILL_ON_TIMEOUT="${ENABLE_KILL_ON_TIMEOUT:-Y}"
+# jar 파일 체크
+if [ ! -f "${AGENT_FULL_PATH}" ]; then
+    error_exit "Jar file not found: ${AGENT_FULL_PATH}"
+fi
 
+# 실행 로그
 log "API_AGENT_NAME=${API_AGENT_NAME}"
+log "AGENT_FILE_PATH=${AGENT_FILE_PATH}"
 log "API_META_ID=${API_META_ID}, BSDT=${BSDT}"
 
+# Agent 실행
+log "Running: java -jar \"${AGENT_FULL_PATH}\" \"${API_META_ID}\" \"${BSDT}\""
 
-# JSON 데이터 구성
-PARAM="{\"API_META_ID\":\"${API_META_ID}\", \"BSDT\":\"${BSDT}\"}"
-echo "Sending JSON: $PARAM"
+java -jar "${AGENT_FULL_PATH}" "${API_META_ID}" "${BSDT}"
+JAVA_EXIT_CODE=$?
 
-# Agent 실행 
-log "Running: java -jar ${API_AGENT_NAME} ${API_META_ID} ${BSDT}"
-java -jar "${API_AGENT_NAME}" "${API_META_ID}" "${BSDT}"
+if [ "${JAVA_EXIT_CODE}" -ne 0 ]; then
+    error_exit "Jar execution failed with exit code ${JAVA_EXIT_CODE}"
+fi
+
+log "Jar execution completed successfully."
+exit 0
 
 
 
