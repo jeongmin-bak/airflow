@@ -14,7 +14,7 @@ error_exit() {
 
 # 환경변수 / 설정
 API_AGENT_NAME="api_collector-3.3.2.jar"
-AGENT_FILE_PATH="/opt/airflow/jars/api_collector-3.3.2.jar"
+AGENT_FILE_PATH="/opt/airflow/jars"
 AGENT_FULL_PATH="${AGENT_FILE_PATH}/${API_AGENT_NAME}"
 
 # 필수 명령어 체크
