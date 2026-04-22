@@ -37,3 +37,5 @@ with DAG(
         python_callable=insrt_postgres,
         op_kwargs={"postgres_conn_id": "conn-db-postgres-custom"},
     )
+
+    insrt_postgres_with_hook
