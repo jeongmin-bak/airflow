@@ -13,10 +13,10 @@ with DAG (
 ) as dag:
 
     def insrt_postgres(ip, port, dbname, user, passwd, **kwargs):
-        import psycopy2
+        import psycopg2
         from contextlib import closing 
 
-        with closing(psycopy2.connect(host=ip, dbname=dbname, user=user, password=passwd, port=int(port))) as conn:
+        with closing(psycopg2.connect(host=ip, dbname=dbname, user=user, password=passwd, port=int(port))) as conn:
             with closing(conn.cursor()) as cursor:
                 dag_id = kwargs.get('ti').dag_id
                 task_id = kwargs.get('ti').task_id
