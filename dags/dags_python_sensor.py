@@ -18,10 +18,9 @@ with DAG(
         connection = BaseHook.get_connection(http_conn_id)
         url = f'http://{connection.host}:{connection.port}/{endpoint}/1/100'
         response = requests.get(url)
-        print(response)
-
+        
         contents = json.loads(response.text)
-        key_nm = list(contents.key())[0]
+        key_nm = list(contents.keys())[0]
         row_data = contents.get(key_nm).get('row')
         last_dt = row_data[0].get(base_dt_col)
         last_date = last_dt[:10]
