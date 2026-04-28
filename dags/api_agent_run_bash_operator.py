@@ -11,7 +11,12 @@ with DAG(
     
     api_meta_run = BashOperator(
         task_id="api_meta_run",
-        bash_command="/opt/airflow/plugins/shell/apiRunJob.sh 1234 20250409",
+        env={'BS_DATE':'{{ (data_interval_end.in_timezone("Asia/Seoul") - macros.dateutil.relativedelta.relativedelta(months=1)) | ds}}'},
+        
+        bash_command= """
+            /opt/airflow/plugins/shell/apiRunJob.sh RTMSDataSvcAptRent $BS_DATE
+            echo "수집 기준일자 : $BS_DATE"
+            """,
     )
 
     api_meta_run
