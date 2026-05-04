@@ -5,7 +5,7 @@ from airflow.sdk import DAG, Asset
 
 asset_dags_dataset_producer_2 = Asset("dags_dataset_producer_2")
 with DAG(
-        dag_id='dags_dataset_producer_1',
+        dag_id='dags_dataset_producer_2',
         schedule='0 7 * * *',
         start_date=pendulum.datetime(2023, 4, 1, tz='Asia/Seoul'),
         catchup=False,
